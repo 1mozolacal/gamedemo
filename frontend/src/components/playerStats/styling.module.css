@@ -1,0 +1,15 @@
+
+.holder{
+    max-height: 25vh;
+}
+
+.circle-holder {
+    width: 150px;
+    /* padding-left: 50px */
+    /* max-height: 100%; */
+}
+
+.circle {
+    height: 100%;
+    margin: 0 20px
+}
