@@ -17,7 +17,7 @@ function Town(props) {
             <div className="actions">
                 <Button className="action" id="attack" color="primary">Shop</Button>{' '}
                 <Button className="action" id="attack" color="primary">Inn</Button>{' '}
-                <Button className="action" id="walk" color="danger">Back to dungeon</Button>{' '}
+                <Button className="action" id="walk" color="danger" onClick={props.teleportDungeon}>Back to dungeon</Button>{' '}
                 <Button className="action" id="inventory" color="success" onClick={toggle}>Inventory</Button>{' '}
             </div>
             <Modal isOpen={modal} toggle={toggle}>

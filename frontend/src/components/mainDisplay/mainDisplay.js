@@ -12,7 +12,7 @@ function MainDisplay(props) {
     return (
         <div>
             {environment == 'dungeon' && (<Dungeon {...props} teleportHome={() => setEnvironment('town')} />)}
-            {environment == 'town' && (<Town {...props} />)}
+            {environment == 'town' && (<Town {...props} teleportDungeon={() => setEnvironment('dungeon')} />)}
         </div>
     )
 } export default MainDisplay;
