@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 
-state = {
+let state = {
   health: 100,
   items: {},
   level: 0,
   xp: 0,
+
 }
 
 function App() {
