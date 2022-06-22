@@ -14,8 +14,12 @@ function App() {
 
   const [text, setText] = useState(0)
 
-  function updateText(newText){
-    text.push(<p>{newText} <br/></p>)
+  function updateText(obj){
+    if(obj.hasOwnProperty("text")){
+      text.push(<p>{obj.text} <br/></p>)
+    }else{
+      console.log("OBJECT MUST HAVE TEXT PARAM")
+    }
   }
   return (
     <div>
