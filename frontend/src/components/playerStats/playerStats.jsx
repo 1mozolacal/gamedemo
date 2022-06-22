@@ -8,7 +8,7 @@ const PlayerStats = ({ health, maxHealth, money, mana, maxMana, name, experience
 
   return (<Grid
     container
-    direction="row"
+    direction="column"
     justifyContent="space-between"
     alignItems="flex-start"
     spacing={2}
@@ -22,19 +22,19 @@ const PlayerStats = ({ health, maxHealth, money, mana, maxMana, name, experience
         <Line percent={experience / experienceToNextLevel * 100} strokeWidth={1} strokeColor="#6bfff0" ></Line>
       </div>
     </Grid>
-    <Grid item sm={6} xs={12}>
+    <Grid item sm={6} xs={6}>
 
       <Grid
         container
         direction="row"
         justifyContent="flex-end"
       >
-        <Grid item >
+        <Grid item lg={12} xs={6}>
           <div className={Styling['circle-holder']}>
             <Circle className={Styling['circle']} percent={health / maxHealth * 100} strokeWidth={4} strokeColor="#ff0d00" />
           </div>
         </Grid>
-        <Grid item className={Styling['circle-holder']}>
+        <Grid item lg={12} xs={6} className={Styling['circle-holder']}>
           <div className={Styling['circle-holder']}>
             <Circle className={Styling['circle']} percent={mana / maxMana * 100} strokeWidth={4} strokeColor="#4269f5" />
           </div>
