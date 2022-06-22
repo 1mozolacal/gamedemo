@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Inventory from '../inventory/inventory';
 import GetMonsters from '../../utils/monsters/getMonsterList.js'
 import AttackPlayer from '../../utils/player/attackPlayer'
+import CreateTreasureChest from '../../utils/dungeon/treasureChest'
 
 
 function Dungeon(props) {
@@ -13,14 +14,16 @@ function Dungeon(props) {
     const [monsters, setMonsters] = useState(undefined)//will be an array
     const [goDeeper, setGoDeeper] = useState(false)
     const [dungeonLevel, setDungeonLevel] = useState(0)
+    const [treasureChest, setTreasureChest] = useState(undefined)
 
 
     function progress() {
         const selector = Math.floor(Math.random() * 100);//0-99
         var goDeeper = false
         var monsters = undefined
+        var treasure = undefined
         if (selector < 4) {
-            //treasure
+            treasure = CreateTreasureChest(dungeonLevel)
         }
         else if (selector < 20) {
             goDeeper = true
@@ -31,11 +34,18 @@ function Dungeon(props) {
         }
 
         setGoDeeper(goDeeper)
+        setTreasureChest(treasure)
         if (monsters === []) {
             setMonsters(undefined)
         } else {
             setMonsters(monsters)
         }
+
+    }
+
+    function downALevel() {
+        setDungeonLevel(dungeonLevel + 1)
+        progress()
     }
 
     function doMove(yourMoveFunc, yourMoveVar) {
@@ -100,7 +110,7 @@ function Dungeon(props) {
                             <Button className="action" id="teleport" color="primary" onClick={props.teleportHome}>Teleport</Button>
                             <Button className="action" id="walk" color="primary" onClick={() => doMove(progress, {})}>Onwards!</Button>
                             {(goDeeper &&
-                                <Button className="action" id="deeper" color="secondary">Deeper!</Button>
+                                <Button className="action" id="deeper" color="secondary" onClick={() => doMove(downALevel, {})}>Deeper!</Button>
                             )}
                         </>
                     )}
