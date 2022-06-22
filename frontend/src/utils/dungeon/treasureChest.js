@@ -12,6 +12,7 @@ const CreateTreasureChest = (level) => {
         dexteritySkill: Math.ceil(Math.random() * level),//If player's dexiderity is higher than bad effect is avoided
         gold: isEpic ? 0 : goldAmont,
         items: [],
+        damage: 2 + Math.floor(level * level * Math.random()),
     }
 }
 

@@ -6,7 +6,8 @@ import Inventory from '../inventory/inventory';
 import GetMonsters from '../../utils/monsters/getMonsterList.js'
 import AttackPlayer from '../../utils/player/attackPlayer'
 import CreateTreasureChest from '../../utils/dungeon/treasureChest'
-
+import OpenTreasureChest from '../../utils/player/openTreasureChest'
+import giveBattleExperience from '../../utils/player/endBattle'
 
 function Dungeon(props) {
     //props: player,setPlayer, teleportHome
@@ -22,7 +23,7 @@ function Dungeon(props) {
         var goDeeper = false
         var monsters = undefined
         var treasure = undefined
-        if (selector < 4) {
+        if (selector < 49) {
             treasure = CreateTreasureChest(dungeonLevel)
         }
         else if (selector < 20) {
@@ -48,16 +49,32 @@ function Dungeon(props) {
         progress()
     }
 
+    function openTreasureChest() {
+        const { player, messages } = OpenTreasureChest(props.player, treasureChest)
+        progress()
+        return {
+            player
+        }
+    }
+
     function doMove(yourMoveFunc, yourMoveVar) {
         const moveSideEffects = yourMoveFunc({ ...yourMoveVar })
         var uptoDateMonsters = monsters
         var uptoDatePlayer = props.player
-        if (moveSideEffects && 'monsters' in moveSideEffects) {
-            uptoDateMonsters = moveSideEffects.monsters
+        if (moveSideEffects) {
+            if ('monsters' in moveSideEffects) {
+                uptoDateMonsters = moveSideEffects.monsters
+            }
+            if ('player' in moveSideEffects) {
+                uptoDatePlayer = moveSideEffects.player
+            }
         }
         if (uptoDateMonsters) {
             const allMonstersDead = uptoDateMonsters.every(item => item.health <= 0)
             if (allMonstersDead) {
+                const returnData = giveBattleExperience(uptoDatePlayer, uptoDateMonsters)
+                uptoDatePlayer = returnData.player
+                // returnData.messages
                 setMonsters(undefined)
             } else {
                 setMonsters(uptoDateMonsters)
@@ -69,7 +86,6 @@ function Dungeon(props) {
     }
 
     function attackMonster({ monsterIndex }) {
-        console.log('thing', monsterIndex, monsters)
         const attackedMonsters = monsters.map((monster, i) => {
             if (monsterIndex != i) {
                 return monster
@@ -79,7 +95,6 @@ function Dungeon(props) {
             clone.health = monster.health - Math.max(1, props.player.baseAttack - monster.defence + critialStrike, (props.player.baseAttack + critialStrike) / monster.defence)
             return clone
         })
-        // setMonsters(attackedMonsters)
         return {
             monsters: attackedMonsters
         }
@@ -103,14 +118,17 @@ function Dungeon(props) {
                             }
                             return <Button key={i} className="action" color="danger" onClick={() => doMove(attackMonster, { monsterIndex: i })}>Attack - {monster.name}</Button>
                         })}
-                        <Button className="action" id="flee" color="secondary">Flee</Button>
+                        <Button className="action" id="flee" color="primary">Flee</Button>
                         <Button className="action" id="defend" color="primary">Defend</Button>
                     </>) || (
                         <>
                             <Button className="action" id="teleport" color="primary" onClick={props.teleportHome}>Teleport</Button>
                             <Button className="action" id="walk" color="primary" onClick={() => doMove(progress, {})}>Onwards!</Button>
+                            {(treasureChest &&
+                                <Button className="action" id="deeper" color="warning" onClick={() => doMove(openTreasureChest, {})}>Treasure!</Button>
+                            )}
                             {(goDeeper &&
-                                <Button className="action" id="deeper" color="secondary" onClick={() => doMove(downALevel, {})}>Deeper!</Button>
+                                <Button className="action" id="deeper" color="info" onClick={() => doMove(downALevel, {})}>Deeper!</Button>
                             )}
                         </>
                     )}

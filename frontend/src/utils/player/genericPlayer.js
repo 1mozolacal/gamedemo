@@ -1,5 +1,3 @@
-
-
 const GetGenericPlayer = (name = 'Nameless Soul') => {
     return {
         name: name,
@@ -7,7 +5,7 @@ const GetGenericPlayer = (name = 'Nameless Soul') => {
         experience: 0,
         experienceToNextLevel: 100,
         hunger: 100,
-        money: 0,
+        gold: 0,//change from money
         health: 100,
         maxHealth: 100,
         mana: 100,

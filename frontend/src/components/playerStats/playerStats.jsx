@@ -4,7 +4,7 @@ import { Line, Circle } from 'rc-progress';
 import Styling from './styling.module.css'
 
 
-const PlayerStats = ({ health, maxHealth, money, mana, maxMana, name, experience, experienceToNextLevel, level }) => {
+const PlayerStats = ({ health, maxHealth, gold, mana, maxMana, name, experience, experienceToNextLevel, level }) => {
 
   return (<Grid
     container
@@ -17,7 +17,7 @@ const PlayerStats = ({ health, maxHealth, money, mana, maxMana, name, experience
     <Grid item sm={6} xs={12}>
       <div>
         <div>{name}'s info</div>
-        <div>Gold:{money}</div>
+        <div>Gold:{gold}</div>
         <div>Levet: {level}</div>
         <Line percent={experience / experienceToNextLevel * 100} strokeWidth={1} strokeColor="#6bfff0" ></Line>
       </div>
