@@ -48,3 +48,19 @@
 #exp{
   margin: auto;
 }
+
+#hp{
+  position: absolute;
+  font-family: 'Trebuchet MS', sans-serif;
+  color: red;
+  font-size: large;
+  font-weight: bold;
+}
+
+#mana{
+  position: absolute;
+  font-family: 'Trebuchet MS', sans-serif;
+  color: rgb(38, 114, 255);
+  font-size: large;
+  font-weight: bold;
+}
