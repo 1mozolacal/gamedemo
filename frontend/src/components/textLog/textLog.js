@@ -11,7 +11,7 @@ class TextLog extends React.Component{
 
     render(){
         return (
-            <div id="textBox" style={{borderStyle: 'solid', width: '350px', minHeight: '200px'}}>
+            <div id="textBox" style={{borderStyle: 'solid', width: '350px', minHeight: '200px', overflowY:'auto'}}>
                     {this.state.pastText}
             </div>
         )
