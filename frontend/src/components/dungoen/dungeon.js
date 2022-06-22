@@ -41,18 +41,21 @@ function Dungeon(props) {
     function doMove(yourMoveFunc, yourMoveVar) {
         const moveSideEffects = yourMoveFunc({ ...yourMoveVar })
         var uptoDateMonsters = monsters
-        if ('monsters' in moveSideEffects) {
+        var uptoDatePlayer = props.player
+        if (moveSideEffects && 'monsters' in moveSideEffects) {
             uptoDateMonsters = moveSideEffects.monsters
         }
-        const allMonstersDead = uptoDateMonsters.every(item => item.health <= 0)
-        if (allMonstersDead) {
-            setMonsters(undefined)
-        } else {
-            setMonsters(uptoDateMonsters)
+        if (uptoDateMonsters) {
+            const allMonstersDead = uptoDateMonsters.every(item => item.health <= 0)
+            if (allMonstersDead) {
+                setMonsters(undefined)
+            } else {
+                setMonsters(uptoDateMonsters)
+            }
+            uptoDatePlayer = AttackPlayer(uptoDatePlayer, uptoDateMonsters)
         }
-        const playerClone = AttackPlayer(props.player, uptoDateMonsters)
-        props.setPlayer(playerClone)
 
+        props.setPlayer(uptoDatePlayer)
     }
 
     function attackMonster({ monsterIndex }) {
@@ -95,7 +98,7 @@ function Dungeon(props) {
                     </>) || (
                         <>
                             <Button className="action" id="teleport" color="primary" onClick={props.teleportHome}>Teleport</Button>
-                            <Button className="action" id="walk" color="primary" onClick={progress}>Onwards!</Button>
+                            <Button className="action" id="walk" color="primary" onClick={() => doMove(progress, {})}>Onwards!</Button>
                             {(goDeeper &&
                                 <Button className="action" id="deeper" color="secondary">Deeper!</Button>
                             )}
