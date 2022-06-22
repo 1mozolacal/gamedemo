@@ -16,7 +16,7 @@ function App() {
 
   function updateText(obj){
     if(obj.hasOwnProperty("text")){
-      text.push(<p>{obj.text} <br/></p>)
+      text.push(<p>{'>'}{'>'} {obj.text} <br/></p>)
     }else{
       console.log("OBJECT MUST HAVE TEXT PARAM")
     }
