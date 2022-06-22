@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+#textBox{
+  position: absolute;
+  right: 5vh;
+  top: 10vh;
+}
