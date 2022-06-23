@@ -33,7 +33,7 @@ const PlayerStats = ({ health, maxHealth, gold, mana, maxMana, name, experience,
         <br />
         <div id="stat"><img src={"/gold.png"} alt="empty" width="25" height="25" id="itemSlot" />{gold} </div>
         <div id="stat">Level: {level}</div>
-        <LinearProgress variant="determinate" value={experience} />
+        <LinearProgress strokeWidth={4} trailWidth={4} variant="determinate" value={experience / experienceToNextLevel * 100} />
       </div>
     </Grid>
     <Grid item sm={6} xs={6}>
@@ -45,13 +45,13 @@ const PlayerStats = ({ health, maxHealth, gold, mana, maxMana, name, experience,
       >
         <Grid item lg={12} xs={6}>
           <div className={Styling['circle-holder']}>
-            <p id="hp" style={{ marginTop: rect.top + 40, marginBottom: rect.bottom, marginLeft: rect.left + 58, marginRight: rect.right }}>{health}</p>
+            <p id="hp" style={{ marginTop: rect.top + 40, marginBottom: rect.bottom, marginLeft: rect.left + 58, marginRight: rect.right }}>{Math.round(health * 100) / 100}</p>
             <Circle id="healthCircle" className={Styling['circle']} percent={health / maxHealth * 100} strokeWidth={4} strokeColor="#ff0d00" />
           </div>
         </Grid>
         <Grid item lg={12} xs={6} className={Styling['circle-holder']}>
           <div className={Styling['circle-holder']}>
-            <p id="mana" style={{ marginTop: rectMa.top + 40, marginBottom: rectMa.bottom, marginLeft: rectMa.left + 58, marginRight: rectMa.right }}>{mana}</p>
+            <p id="mana" style={{ marginTop: rectMa.top + 40, marginBottom: rectMa.bottom, marginLeft: rectMa.left + 58, marginRight: rectMa.right }}>{Math.round(mana * 100) / 100}</p>
             <Circle id="manaCircle" className={Styling['circle']} percent={mana / maxMana * 100} strokeWidth={4} strokeColor="#4269f5" />
           </div>
         </Grid>

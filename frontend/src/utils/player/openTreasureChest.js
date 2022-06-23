@@ -13,6 +13,7 @@ const OpenTreasureChest = (player, chest) => {
     }
 
     clone.gold += chest.gold
+    messages.push({ text: `You found ${chest.gold} gold coin${chest.gold > 1 ? 's' : ''}` })
 
     //add is locked mechanic
 

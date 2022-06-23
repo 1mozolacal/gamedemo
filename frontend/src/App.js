@@ -9,35 +9,44 @@ import GetGenericPlayer from './utils/player/genericPlayer'
 
 import { useState } from 'react';
 
-function App() {  
+function App() {
   const [player, setPlayer] = useState(GetGenericPlayer())
 
-  const [text, setText] = useState(0)
+  const [messages, setMessages] = useState([{ text: "Welcome to the dungeon" }])
 
-  function updateText(obj){
-    if(obj.hasOwnProperty("text")){
-      text.push(<p>{obj.text} <br/></p>)
-    }else{
+  function updateText(obj) {
+    if (obj.hasOwnProperty("text")) {
+      var oldMessages = messages
+      oldMessages.push(obj)
+      setMessages(oldMessages)
+      // text.push(<p>{obj.text} <br/></p>)
+    } else {
       console.log("OBJECT MUST HAVE TEXT PARAM")
     }
+  }
+
+  function pushMultipleMessages(msgs) {
+    const filtered = msgs.filter(item => item.hasOwnProperty('text'))
+    const combine = messages.concat(filtered)
+    setMessages(combine)
   }
   return (
     <div>
       <div id="sidebar"></div>
       <div className="App">
-      <Grid container spacing={2}>
-                
-        <Grid item sm={12} md={12} xs={12} lg={3}>
-          <PlayerStats {...player} />
+        <Grid container spacing={2}>
+
+          <Grid item sm={12} md={12} xs={12} lg={3}>
+            <PlayerStats {...player} />
+          </Grid>
+          <Grid item sm={12} md={12} xs={12} lg={5}>
+            <MainDisplay player={player} setPlayer={setPlayer} pushMessages={pushMultipleMessages} />
+          </Grid>
+          <Grid item sm={12} md={12} xs={12} lg={4}>
+            <TextLog messages={messages} />
+          </Grid>
         </Grid>
-        <Grid item sm={12} md={12}xs={12}lg={5}>
-          <MainDisplay player={player} setPlayer={setPlayer} />
-        </Grid>
-        <Grid item sm={12} md={12} xs={12}lg={4}>
-          <TextLog text={text} />
-        </Grid>
-      </Grid>
-            
+
       </div>
       <div id="info">
 

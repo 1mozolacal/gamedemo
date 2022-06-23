@@ -19,19 +19,24 @@ function Dungeon(props) {
 
 
     function progress() {
+        var messages = []
         const selector = Math.floor(Math.random() * 100);//0-99
         var goDeeper = false
         var monsters = undefined
         var treasure = undefined
-        if (selector < 49) {
+        if (selector < 5) {
             treasure = CreateTreasureChest(dungeonLevel)
+            messages.push({ text: "A Treasure Chest appeared!" })
         }
         else if (selector < 20) {
             goDeeper = true
+            messages.push({ text: "An opening to venture deeper is here." })
         } else if (selector < 70) {
             // make random drops
+            messages.push({ text: "You venture further finding nothing of interest." })
         } else {
             monsters = GetMonsters()
+            messages.push({ text: "Ahhh! Monsters." })
         }
 
         setGoDeeper(goDeeper)
@@ -42,23 +47,32 @@ function Dungeon(props) {
             setMonsters(monsters)
         }
 
+        return {
+            messages
+        }
+
     }
 
     function downALevel() {
         setDungeonLevel(dungeonLevel + 1)
-        progress()
+        const { messages } = progress()
+        return {
+            messages: [{ text: `You ventured to level ${dungeonLevel + 1} of the dungeon` }].concat(messages)
+        }
     }
 
     function openTreasureChest() {
         const { player, messages } = OpenTreasureChest(props.player, treasureChest)
-        progress()
+        const progressReturn = progress()
         return {
-            player
+            player,
+            messages: messages.concat(progressReturn.messages)
         }
     }
 
     function doMove(yourMoveFunc, yourMoveVar) {
         const moveSideEffects = yourMoveFunc({ ...yourMoveVar })
+        var messages = []
         var uptoDateMonsters = monsters
         var uptoDatePlayer = props.player
         if (moveSideEffects) {
@@ -68,35 +82,45 @@ function Dungeon(props) {
             if ('player' in moveSideEffects) {
                 uptoDatePlayer = moveSideEffects.player
             }
+            if ('messages' in moveSideEffects) {
+                messages = messages.concat(moveSideEffects.messages)
+            }
         }
         if (uptoDateMonsters) {
             const allMonstersDead = uptoDateMonsters.every(item => item.health <= 0)
             if (allMonstersDead) {
                 const returnData = giveBattleExperience(uptoDatePlayer, uptoDateMonsters)
                 uptoDatePlayer = returnData.player
-                // returnData.messages
+                messages = messages.concat(returnData.messages)
                 setMonsters(undefined)
             } else {
                 setMonsters(uptoDateMonsters)
+                const attackStatus = AttackPlayer(uptoDatePlayer, uptoDateMonsters)
+                messages = messages.concat(attackStatus.messages)
+                uptoDatePlayer = attackStatus.player
             }
-            uptoDatePlayer = AttackPlayer(uptoDatePlayer, uptoDateMonsters)
+
         }
 
         props.setPlayer(uptoDatePlayer)
+        props.pushMessages(messages)
     }
 
     function attackMonster({ monsterIndex }) {
+        const messages = []
         const attackedMonsters = monsters.map((monster, i) => {
             if (monsterIndex != i) {
                 return monster
             }
+            messages.push({ text: `You hit the ${monster.name}` })
             var clone = monster//shallow copy
             const critialStrike = Math.random() * 20 < 1 ? props.player.baseAttack * 5 : 0
             clone.health = monster.health - Math.max(1, props.player.baseAttack - monster.defence + critialStrike, (props.player.baseAttack + critialStrike) / monster.defence)
             return clone
         })
         return {
-            monsters: attackedMonsters
+            monsters: attackedMonsters,
+            messages
         }
     }
 
