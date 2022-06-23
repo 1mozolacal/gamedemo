@@ -14,12 +14,19 @@ function App() {
 
   const [messages, setMessages] = useState([{ text: "Welcome to the dungeon" }])
 
-  function updateText(obj) {
+  function updateTextOld(obj) {
     if (obj.hasOwnProperty("text")) {
       var oldMessages = messages
       oldMessages.push(obj)
       setMessages(oldMessages)
       // text.push(<p>{obj.text} <br/></p>)
+    } else {
+      console.log("OBJECT MUST HAVE TEXT PARAM")
+    }
+  }
+  function updateText(obj) {
+    if (obj.hasOwnProperty("text")) {
+      text.push(<p>{'>'}{'>'} {obj.text} <br /></p>)
     } else {
       console.log("OBJECT MUST HAVE TEXT PARAM")
     }
