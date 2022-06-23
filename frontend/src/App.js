@@ -24,13 +24,13 @@ function App() {
       console.log("OBJECT MUST HAVE TEXT PARAM")
     }
   }
-  function updateText(obj) {
-    if (obj.hasOwnProperty("text")) {
-      text.push(<p>{'>'}{'>'} {obj.text} <br /></p>)
-    } else {
-      console.log("OBJECT MUST HAVE TEXT PARAM")
-    }
-  }
+  // function updateText(obj) {
+  //   if (obj.hasOwnProperty("text")) {
+  //     text.push(<p>{'>'}{'>'} {obj.text} <br /></p>)
+  //   } else {
+  //     console.log("OBJECT MUST HAVE TEXT PARAM")
+  //   }
+  // }
 
   function pushMultipleMessages(msgs) {
     const filtered = msgs.filter(item => item.hasOwnProperty('text'))
