@@ -8,6 +8,7 @@ import AttackPlayer from '../../utils/player/attackPlayer'
 import CreateTreasureChest from '../../utils/dungeon/treasureChest'
 import OpenTreasureChest from '../../utils/player/openTreasureChest'
 import giveBattleExperience from '../../utils/player/endBattle'
+import LowerHunger from '../../utils/player/LowerHunger'
 
 function Dungeon(props) {
     //props: player,setPlayer, teleportHome
@@ -101,7 +102,9 @@ function Dungeon(props) {
             }
 
         }
-
+        const lowerHungerStatus = LowerHunger(uptoDatePlayer)
+        uptoDatePlayer = lowerHungerStatus.player
+        messages = messages.concat(lowerHungerStatus.messages)
         props.setPlayer(uptoDatePlayer)
         props.pushMessages(messages)
     }

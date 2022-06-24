@@ -6,7 +6,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 
 
-const PlayerStats = ({ health, maxHealth, gold, mana, maxMana, name, experience, experienceToNextLevel, level }) => {
+const PlayerStats = ({ health, maxHealth, gold, mana, maxMana, name, experience, experienceToNextLevel, level, hunger }) => {
   let rect = { left: 0, right: 0, top: 0, bottom: 0 }
   let rectMa = { left: 0, right: 0, top: 0, bottom: 0 }
   useEffect(() => {
@@ -32,6 +32,7 @@ const PlayerStats = ({ health, maxHealth, gold, mana, maxMana, name, experience,
         <div id="stat">{name}'s stats</div>
         <br />
         <div id="stat"><img src={"/gold.png"} alt="empty" width="25" height="25" id="itemSlot" />{gold} </div>
+        <div>hunger level: {hunger}</div>
         <div id="stat">Level: {level}</div>
         <LinearProgress strokeWidth={4} trailWidth={4} variant="determinate" value={experience / experienceToNextLevel * 100} />
       </div>
