@@ -6,10 +6,12 @@ const TextLog = ({ messages }) => {
 
 
     return (
-        <div id="textBox" style={{ borderStyle: 'solid', width: '350px', minHeight: '200px', overflowY: 'auto' }}>
-            {messages.map((ele, i) => {
-                return (<p key={i}>{ele.text} <br /></p>)
-            })}
+        <div style={{overflowY: 'auto', display:"flex", flexDirection: "column-reverse", borderStyle: 'solid', width: '350px', minHeight: '53vh', maxHeight: '53vh'}}>
+            <div id="textBox" style={{}}>
+                {messages.map((ele, i) => {
+                    return (<p key={i}>{ele.text} <br /></p>)
+                })}
+            </div>
         </div>
     )
 }

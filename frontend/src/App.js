@@ -50,7 +50,7 @@ function App() {
             <MainDisplay player={player} setPlayer={setPlayer} pushMessages={pushMultipleMessages} />
           </Grid>
           <Grid item sm={12} md={12} xs={12} lg={4}>
-            <TextLog messages={messages} />
+            <TextLog messages={messages.reverse()} />
           </Grid>
         </Grid>
 
