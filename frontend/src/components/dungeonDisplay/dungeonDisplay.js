@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Grid';
 import * as React from 'react';
+import LinearProgress from '@mui/material/LinearProgress';
 
 import Styling from './styling.module.css'
 
@@ -44,7 +45,8 @@ function DungeonDisplay(props) {
                     {props.monsters &&
                         props.monsters.map((monster, i) => {
                             return <Grid item>
-                                <img src={monster.image} width="100" height="100"></img>
+                                <img src={monster.image} width="100" height="100"></img> <br/>
+                                <LinearProgress strokeWidth={4} trailWidth={4} style={{width: '75px', colorPrimary: '#ff0000'}} color="error"  variant="determinate" value={( monster.health / monster.maxHealth) * 100} />
                             </Grid>
                         })}
 
