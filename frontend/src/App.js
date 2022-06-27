@@ -39,25 +39,29 @@ function App() {
   }
   return (
     <div>
-      <div id="sidebar"></div>
-      <div className="App">
-        <Grid container spacing={2}>
+      {(player.health <= 0 && <div>GAME OVER</div>)
+        || (
+          <> <div id="sidebar"></div>
+            <div className="App">
+              <Grid container spacing={2}>
 
-          <Grid item sm={12} md={12} xs={12} lg={3}>
-            <PlayerStats {...player} />
-          </Grid>
-          <Grid item sm={12} md={12} xs={12} lg={5}>
-            <MainDisplay player={player} setPlayer={setPlayer} pushMessages={pushMultipleMessages} />
-          </Grid>
-          <Grid item sm={12} md={12} xs={12} lg={4}>
-            <TextLog messages={messages.reverse()} />
-          </Grid>
-        </Grid>
+                <Grid item sm={12} md={12} xs={12} lg={3}>
+                  <PlayerStats {...player} />
+                </Grid>
+                <Grid item sm={12} md={12} xs={12} lg={5}>
+                  <MainDisplay player={player} setPlayer={setPlayer} pushMessages={pushMultipleMessages} />
+                </Grid>
+                <Grid item sm={12} md={12} xs={12} lg={4}>
+                  <TextLog messages={messages.reverse()} />
+                </Grid>
+              </Grid>
 
-      </div>
-      <div id="info">
+            </div>
+            <div id="info">
 
-      </div>
+            </div>
+          </>)}
+
     </div>
   );
 }

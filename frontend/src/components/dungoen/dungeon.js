@@ -23,12 +23,13 @@ function Dungeon(props) {
 
 
 
-    function progress() {
+    function progress({ player }) {
         var messages = []
         const selector = Math.floor(Math.random() * 100);//0-99
         var goDeeper = false
         var monsters = undefined
         var treasure = undefined
+        var currentPlayer = player
         if (selector < 5) {
             treasure = CreateTreasureChest(dungeonLevel)
             messages.push({ text: "A Treasure Chest appeared!" })
@@ -36,9 +37,12 @@ function Dungeon(props) {
         else if (selector < 20) {
             goDeeper = true
             messages.push({ text: "An opening to venture deeper is here." })
-        } else if (selector < 70) {
+        } else if (selector < 50) {
             // make random drops
             messages.push({ text: "You venture further finding nothing of interest." })
+        } else if (selector < 70) {
+            currentPlayer.gold += Math.ceil(Math.random() * 4)
+            messages.push({ text: "You found something shiny" })
         } else {
             monsters = GetMonsters()
             messages.push({ text: "Ahhh! Monsters." })
@@ -53,25 +57,27 @@ function Dungeon(props) {
         }
 
         return {
-            messages
+            messages,
+            player: currentPlayer,
         }
 
     }
 
-    function downALevel() {
+    function downALevel(context) {
         setDungeonLevel(dungeonLevel + 1)
-        const { messages } = progress()
+        const retPro = progress(context)
         return {
-            messages: [{ text: `You ventured to level ${dungeonLevel + 1} of the dungeon` }].concat(messages)
+            messages: [{ text: `You ventured to level ${dungeonLevel + 1} of the dungeon` }].concat(retPro.messages),
+            player: retPro.player
         }
     }
 
-    function openTreasureChest() {
-        const { player, messages } = OpenTreasureChest(props.player, treasureChest)
-        const progressReturn = progress()
+    function openTreasureChest({ player }) {
+        const treasureReturn = OpenTreasureChest(player, treasureChest)
+        const progressReturn = progress({ player: treasureReturn.player })
         return {
-            player,
-            messages: messages.concat(progressReturn.messages)
+            player: progressReturn.player,
+            messages: treasureReturn.messages.concat(progressReturn.messages)
         }
     }
 
@@ -152,18 +158,18 @@ function Dungeon(props) {
                             if (monster.health <= 0) {
                                 return <Button key={i} className="action" color="secondary">Dead - {monster.name}</Button>
                             }
-                            return <Button key={i} className="action" color="danger" onClick={() => doMove(attackMonster, { monsterIndex: i })}>Attack - {monster.name}</Button>
+                            return <Button key={i} className="action" color="danger" onClick={() => doMove(attackMonster, { monsterIndex: i, player: props.player })}>Attack - {monster.name}</Button>
                         })}
                         <Button className="action" id="flee" color="primary">Flee</Button>
                         <Button className="action" id="defend" color="primary">Defend</Button>
                     </>) || (
                         <>
-                            <Button className="action" id="walk" color="primary" onClick={() => doMove(progress, {})}>Onwards!</Button>
+                            <Button className="action" id="walk" color="primary" onClick={() => doMove(progress, { player: props.player })}>Onwards!</Button>
                             {(treasureChest &&
-                                <Button className="action" id="deeper" color="warning" onClick={() => doMove(openTreasureChest, {})}>Treasure!</Button>
+                                <Button className="action" id="deeper" color="warning" onClick={() => doMove(openTreasureChest, { player: props.player })}>Treasure!</Button>
                             )}
                             {(goDeeper &&
-                                <Button className="action" id="deeper" color="info" onClick={() => doMove(downALevel, {})}>Deeper!</Button>
+                                <Button className="action" id="deeper" color="info" onClick={() => doMove(downALevel, { player: props.player })}>Deeper!</Button>
                             )}
                         </>
                     )}

@@ -3,8 +3,8 @@ const CreateTreasureChest = (level) => {
     const isEpic = Math.random() < 0.02 * level
     const isOnlyGold = !isEpic ? Math.random() < 0.3 : false
     const goldAmont = isOnlyGold ?
-        Math.floor(Math.random() * 15 * level) + 2
-        : Math.floor(Math.random() * 5 * level) + 2
+        Math.floor(Math.random() * 35 * level) + 4
+        : Math.floor(Math.random() * 15 * level) + 4
 
     return {
         dangerous: isDangerous,
