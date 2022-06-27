@@ -1,0 +1,19 @@
+.dungeonimage {
+    height: 500;
+    width: 400;
+    background-size: cover;
+    margin: auto;
+}
+
+.monsterholder {
+    height: 100%;
+}
+
+.backdrop {
+    z-index: -5;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

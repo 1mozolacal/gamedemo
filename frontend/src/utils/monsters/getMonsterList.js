@@ -6,7 +6,10 @@ const GetMonsters = (dungeonLevel = 0) => {
 
     if (Math.random() * 2 > 1) {
         monsters.push(CreateRat())
+        monsters.push(CreateSlime())
     } else {
+        monsters.push(CreateSlime())
+        monsters.push(CreateSlime())
         monsters.push(CreateSlime())
     }
     return monsters

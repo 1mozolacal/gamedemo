@@ -9,6 +9,7 @@ import CreateTreasureChest from '../../utils/dungeon/treasureChest'
 import OpenTreasureChest from '../../utils/player/openTreasureChest'
 import giveBattleExperience from '../../utils/player/endBattle'
 import LowerHunger from '../../utils/player/LowerHunger'
+import DungeonDisplay from '../dungeonDisplay/dungeonDisplay';
 
 import Styling from './dungeon.module.css'
 
@@ -20,27 +21,7 @@ function Dungeon(props) {
     const [dungeonLevel, setDungeonLevel] = useState(0)
     const [treasureChest, setTreasureChest] = useState(undefined)
 
-    const backgroundColor = '' + (255 - (dungeonLevel * 10))
 
-    const levelBackGround = [
-        '/dungeonBackground/dungeon_lvl_1.jpg',
-        '/dungeonBackground/dungeon_lvl_2.jpg',
-        '/dungeonBackground/dungeon_lvl_3.jpg',
-        '/dungeonBackground/dungeon_lvl_4.png',
-        '/dungeonBackground/dungeon_lvl_5.jpg',
-        '/dungeonBackground/dungeon_lvl_6.jpg',
-        '/dungeonBackground/dungeon_lvl_7.jpg',
-        '/dungeonBackground/dungeon_lvl_8.jpg',
-        '/dungeonBackground/dungeon_lvl_9.jpg',
-        '/dungeonBackground/dungeon_lvl_10.jpg',
-        '/dungeonBackground/dungeon_lvl_11.jpg',
-        '/dungeonBackground/dungeon_lvl_12.jpg',
-        '/dungeonBackground/dungeon_lvl_13.jpg',
-        '/dungeonBackground/dungeon_lvl_14.jpg',
-        '/dungeonBackground/dungeon_lvl_15.jpg',
-        '/dungeonBackground/dungeon_lvl_16.jpg',
-        '/dungeonBackground/dungeon_lvl_17.jpg',
-    ]
 
     function progress() {
         var messages = []
@@ -52,7 +33,7 @@ function Dungeon(props) {
             treasure = CreateTreasureChest(dungeonLevel)
             messages.push({ text: "A Treasure Chest appeared!" })
         }
-        else if (selector < 80) {
+        else if (selector < 20) {
             goDeeper = true
             messages.push({ text: "An opening to venture deeper is here." })
         } else if (selector < 70) {
@@ -157,8 +138,12 @@ function Dungeon(props) {
     }
     return (
         <div className="screen">
-            <div className={Styling.backdrop} style={{ backgroundColor: `rgb(${backgroundColor} ${backgroundColor} ${backgroundColor})` }}>hi</div>
-            <img src={levelBackGround[Math.min(levelBackGround.length - 1, dungeonLevel)]} alt="Dungeon" width="500" height="400" />
+            <DungeonDisplay
+                level={dungeonLevel}
+                width={500}
+                height={400}
+                monsters={monsters}
+            />
             <br />
             <div className="actions">
                 {(monsters &&
