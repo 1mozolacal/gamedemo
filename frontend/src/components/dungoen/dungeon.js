@@ -10,6 +10,8 @@ import OpenTreasureChest from '../../utils/player/openTreasureChest'
 import giveBattleExperience from '../../utils/player/endBattle'
 import LowerHunger from '../../utils/player/LowerHunger'
 
+import Styling from './dungeon.module.css'
+
 function Dungeon(props) {
     //props: player,setPlayer, teleportHome
 
@@ -18,6 +20,27 @@ function Dungeon(props) {
     const [dungeonLevel, setDungeonLevel] = useState(0)
     const [treasureChest, setTreasureChest] = useState(undefined)
 
+    const backgroundColor = '' + (255 - (dungeonLevel * 10))
+
+    const levelBackGround = [
+        '/dungeonBackground/dungeon_lvl_1.jpg',
+        '/dungeonBackground/dungeon_lvl_2.jpg',
+        '/dungeonBackground/dungeon_lvl_3.jpg',
+        '/dungeonBackground/dungeon_lvl_4.png',
+        '/dungeonBackground/dungeon_lvl_5.jpg',
+        '/dungeonBackground/dungeon_lvl_6.jpg',
+        '/dungeonBackground/dungeon_lvl_7.jpg',
+        '/dungeonBackground/dungeon_lvl_8.jpg',
+        '/dungeonBackground/dungeon_lvl_9.jpg',
+        '/dungeonBackground/dungeon_lvl_10.jpg',
+        '/dungeonBackground/dungeon_lvl_11.jpg',
+        '/dungeonBackground/dungeon_lvl_12.jpg',
+        '/dungeonBackground/dungeon_lvl_13.jpg',
+        '/dungeonBackground/dungeon_lvl_14.jpg',
+        '/dungeonBackground/dungeon_lvl_15.jpg',
+        '/dungeonBackground/dungeon_lvl_16.jpg',
+        '/dungeonBackground/dungeon_lvl_17.jpg',
+    ]
 
     function progress() {
         var messages = []
@@ -29,7 +52,7 @@ function Dungeon(props) {
             treasure = CreateTreasureChest(dungeonLevel)
             messages.push({ text: "A Treasure Chest appeared!" })
         }
-        else if (selector < 20) {
+        else if (selector < 80) {
             goDeeper = true
             messages.push({ text: "An opening to venture deeper is here." })
         } else if (selector < 70) {
@@ -134,7 +157,8 @@ function Dungeon(props) {
     }
     return (
         <div className="screen">
-            <img src={'/dungeon.jpg'} alt="Dungeon" width="500" height="400" />
+            <div className={Styling.backdrop} style={{ backgroundColor: `rgb(${backgroundColor} ${backgroundColor} ${backgroundColor})` }}>hi</div>
+            <img src={levelBackGround[Math.min(levelBackGround.length - 1, dungeonLevel)]} alt="Dungeon" width="500" height="400" />
             <br />
             <div className="actions">
                 {(monsters &&
@@ -149,7 +173,6 @@ function Dungeon(props) {
                         <Button className="action" id="defend" color="primary">Defend</Button>
                     </>) || (
                         <>
-                            <Button className="action" id="teleport" color="primary" onClick={props.teleportHome}>Teleport</Button>
                             <Button className="action" id="walk" color="primary" onClick={() => doMove(progress, {})}>Onwards!</Button>
                             {(treasureChest &&
                                 <Button className="action" id="deeper" color="warning" onClick={() => doMove(openTreasureChest, {})}>Treasure!</Button>
@@ -160,6 +183,9 @@ function Dungeon(props) {
                         </>
                     )}
                 <Button className="action" id="inventory" color="success" onClick={toggle}>Inventory</Button>{' '}
+                {
+                    !monsters && <Button className="action" id="teleport" color="primary" onClick={() => props.teleport('town')}>Teleport</Button>
+                }
             </div>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Inventory</ModalHeader>

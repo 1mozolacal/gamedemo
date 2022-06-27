@@ -5,19 +5,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Inventory from '../inventory/inventory';
 
 
-function Town(props) {
+function Shop(props) {
     const [modal, setModal] = useState(0);
     function toggle() {
         setModal(!modal)
     }
     return (
         <div className="screen">
-            <img src={'/town.jpg'} alt="town backdrop" width="500" height="400" />
+            <img src={'/shop.png'} alt="shop backdrop" width="500" height="400" />
             <br />
             <div className="actions">
-                <Button className="action" id="attack" color="primary" onClick={() => props.teleport('shop')}>Shop</Button>{' '}
-                <Button className="action" id="attack" color="primary" onClick={() => props.teleport('inn')}>Inn</Button>{' '}
-                <Button className="action" id="backToDungeon" color="danger" onClick={() => props.teleport('dungeon')}>Back to dungeon</Button>{' '}
+                <Button className="action" id="attack" color="primary">Buy</Button>{' '}
+                <Button className="action" id="attack" color="primary">Sell</Button>{' '}
+                <Button className="action" id="walk" color="info" onClick={() => props.teleport('town')}>Back to Town</Button>{' '}
                 <Button className="action" id="inventory" color="success" onClick={toggle}>Inventory</Button>{' '}
             </div>
             <Modal isOpen={modal} toggle={toggle}>
@@ -26,4 +26,4 @@ function Town(props) {
             </Modal>
         </div>
     )
-} export default Town;
+} export default Shop;
