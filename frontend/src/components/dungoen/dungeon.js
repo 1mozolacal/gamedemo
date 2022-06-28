@@ -44,7 +44,7 @@ function Dungeon(props) {
             currentPlayer.gold += Math.ceil(Math.random() * 4)
             messages.push({ text: "You found something shiny" })
         } else {
-            monsters = GetMonsters()
+            monsters = GetMonsters(dungeonLevel)
             messages.push({ text: "Ahhh! Monsters." })
         }
 

@@ -44,7 +44,7 @@ function DungeonDisplay(props) {
                     {props.monsters &&
                         props.monsters.map((monster, i) => {
                             return <Grid item>
-                                <img src={monster.image} width="100" height="100"></img>
+                                <img src={monster.image} width={monster.imageWidth} height={monster.imageHeight}></img>
                             </Grid>
                         })}
 
