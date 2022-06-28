@@ -1,6 +1,7 @@
 const CreateGenericMonster = (name = 'nameless monster') => {
     return {
         name: name,
+        maxHealth: 10,
         health: 10,
         mana: 0,
         attack: 5,
